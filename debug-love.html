@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Love Debugger💗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/debug-love.css" />
+  <link rel="stylesheet" href="css/music-player.css" />
+</head>
+
+<body class="debug-bg">
+
+<!-- Floating Music Player -->
+<div id="music-player"></div>
+
+<main class="debug-wrapper">
+
+  <section class="terminal">
+
+    <div class="terminal-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="terminal-title">love_debugger.sh</span>
+    </div>
+
+    <div class="terminal-body" id="terminalBody"></div>
+
+  </section>
+
+  <!-- CTA -->
+  <div class="debug-cta hidden" id="debugCTA">
+    <button onclick="goToSurprise()">Click On Me 💖</button>
+  </div>
+
+</main>
+
+<script src="js/music.js"></script>
+
+<script>
+  // Ensure suspense music
+  playTrack("track1");
+
+  const lines = [
+    "$ initializing love_debugger()",
+    "$ locating relationship...",
+    "✔ relationship found",
+    "$ checking trust_module...",
+    "✔ trust_module: stable",
+    "$ checking care_module...",
+    "✔ care_module: infinite",
+    "$ checking patience...",
+    "✔ patience: exceptional",
+    "$ preparing final surprise...",
+    "$ running final surprise..."
+  ];
+
+  const terminalBody = document.getElementById("terminalBody");
+  const debugCTA = document.getElementById("debugCTA");
+
+  let lineIndex = 0;
+  let charIndex = 0;
+
+  function typeLine() {
+    if (lineIndex >= lines.length) {
+      setTimeout(() => {
+        debugCTA.classList.remove("hidden");
+      }, 1200);
+      return;
+    }
+
+    if (charIndex === 0) {
+      terminalBody.innerHTML += `<p class="terminal-line"></p>`;
+    }
+
+    const currentLine = lines[lineIndex];
+    const currentP = terminalBody.lastElementChild;
+    currentP.textContent += currentLine.charAt(charIndex);
+    charIndex++;
+
+    if (charIndex < currentLine.length) {
+      setTimeout(typeLine, 70); // ⏳ SLOWER TYPING
+    } else {
+      charIndex = 0;
+      lineIndex++;
+      setTimeout(typeLine, 900); // ⏳ Longer pause between lines
+    }
+  }
+
+  function goToSurprise() {
+    window.location.href = "surprise.html";
+  }
+
+  typeLine();
+</script>
+
+</body>
+</html>

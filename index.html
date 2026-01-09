@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>♥️ Hi Vaaniii ♥️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/music-player.css" />
+
+</head>
+
+<body class="landing-bg">
+
+<!-- 🎁 FULL PAGE GIFT WRAPPER -->
+<div id="giftWrapper" class="gift-wrapper">
+
+  <!-- GOLD RIBBON -->
+  <div class="ribbon-vertical"></div>
+  <div class="ribbon-horizontal"></div>
+
+  <!-- BOW -->
+  <div class="bow">
+    <span class="bow-left"></span>
+    <span class="bow-right"></span>
+    <span class="bow-center"></span>
+  </div>
+
+
+  <!-- Subtle Guide Text -->
+  <div class="gift-guide">
+    <span>For Vaaniii♥️</span>
+    <small>Tap anywhere to unwrap</small>
+  </div>
+
+</div>
+
+<!-- Confetti Sound -->
+<audio id="unwrapSound" src="assets/audio/confetti.mp3" preload="auto"></audio>
+
+
+
+<main class="landing-wrapper">
+
+  <!-- TERMINAL -->
+  <section class="terminal-wrapper" id="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="terminal-title">birthday_protocol.sh</span>
+    </div>
+    <div class="terminal-body" id="terminalBody"></div>
+  </section>
+
+  <!-- MUSIC BUTTON -->
+  <section class="action-wrapper hidden" id="musicSection">
+    <div class="tooltip-wrapper">
+      <button id="startMusicBtn" class="music-btn">
+        Tap Your Soft Fingers 🥰
+      </button>
+      <span class="tooltip">
+        There is so much I’ve planned for you 💙
+      </span>
+    </div>
+  </section>
+
+  <!-- POETIC -->
+  <section class="poetic-wrapper hidden" id="poeticBlock">
+    <p class="poetic-text poetic-text-1">
+      I wanted to make your special day a little more special.
+    </p>
+    <p class="poetic-text poetic-text-2">
+      So I tried my best and built this. Not perfect. Just… honest.
+    </p>
+    <p class="poetic-text poetic-text-3">
+      Thoda sa code, Dher saara pyaar.
+    </p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-wrapper hidden" id="ctaBlock">
+    <button id="continueBtn" class="cta-btn">
+      Let’s Deep Dive 🥵
+    </button>
+  </section>
+
+</main>
+
+<div id="music-player"></div>
+<script src="js/music.js"></script>
+
+<script>
+
+const terminalLines = [
+  "$ initializing birthday_protocol.sh",
+  "$ locating: Vaaniii",
+  "✔ found",
+  "$ loading emotions ❤️ ...",
+  "Status: Today is special — It’s V Day 😍"
+];
+
+const terminalBody = document.getElementById("terminalBody");
+const musicSection = document.getElementById("musicSection");
+const terminal = document.getElementById("terminal");
+const poetic = document.getElementById("poeticBlock");
+const cta = document.getElementById("ctaBlock");
+
+let lineIndex = 0;
+let charIndex = 0;
+
+function typeLine() {
+  if (lineIndex >= terminalLines.length) {
+    setTimeout(() => {
+      musicSection.classList.remove("hidden");
+    }, 600);
+    return;
+  }
+
+  if (charIndex === 0) {
+    terminalBody.innerHTML += `<p class="terminal-line"></p>`;
+  }
+
+  const currentLine = terminalLines[lineIndex];
+  const currentP = terminalBody.lastElementChild;
+  currentP.textContent += currentLine.charAt(charIndex);
+  charIndex++;
+
+  if (charIndex < currentLine.length) {
+    setTimeout(typeLine, 80);
+  } else {
+    charIndex = 0;
+    lineIndex++;
+    setTimeout(typeLine, 500);
+  }
+}
+
+// typeLine();
+
+const gift = document.getElementById("giftWrapper");
+const unwrapSound = document.getElementById("unwrapSound");
+
+
+// Hide terminal initially
+terminal.style.opacity = "0";
+terminal.style.transition = "opacity 1.2s ease";
+
+gift.addEventListener("click", () => {
+  // Play confetti sound
+  unwrapSound.volume = 0.7;
+  unwrapSound.play();
+
+  // Start unwrap animation
+  gift.classList.add("unwrap");
+
+  // After unwrap animation
+  setTimeout(() => {
+    gift.style.display = "none";
+
+    // Fade in terminal
+    terminal.style.opacity = "1";
+
+    // Start terminal typing AFTER fade-in
+    setTimeout(() => {
+      typeLine(); // your existing terminal typing function
+    }, 800);
+
+  }, 1200);
+});
+
+
+document.getElementById("startMusicBtn").addEventListener("click", () => {
+  playTrack("track1");
+
+  terminal.classList.add("terminal-exit");
+  musicSection.classList.add("hidden");  
+
+  setTimeout(() => {
+    terminal.style.display = "none";
+    poetic.classList.remove("hidden");
+    document.body.classList.add("poetic-bg");
+    typePoetry();
+  }, 600);
+});
+
+function typePoetry() {
+  const poeticTexts = document.querySelectorAll(".poetic-text-1, .poetic-text-2, .poetic-text-3");
+  let currentIndex = 0;
+
+  function typeNextBlock() {
+    if (currentIndex >= poeticTexts.length) {
+      setTimeout(() => {
+        cta.classList.remove("hidden");
+      }, 800);
+      return;
+    }
+
+    const element = poeticTexts[currentIndex];
+    element.classList.add("active"); // Show only this block
+    const text = element.textContent;
+    element.textContent = ""; // Clear the text
+    
+    typeCharacters(element, text, 0, () => {
+      currentIndex++;
+      setTimeout(typeNextBlock, 1500); // Pause before next block
+    });
+  }
+
+  typeNextBlock();
+}
+
+function typeCharacters(element, text, charIndex, callback) {
+  if (charIndex >= text.length) {
+    callback();
+    return;
+  }
+
+  element.textContent += text.charAt(charIndex);
+  charIndex++;
+
+  setTimeout(() => typeCharacters(element, text, charIndex, callback), 80); // Smooth letter typing like terminal
+}
+
+document.getElementById("continueBtn").addEventListener("click", () => {
+  window.location.href = "memories.html";
+})
+
+</script>
+
+
+</body>
+</html>

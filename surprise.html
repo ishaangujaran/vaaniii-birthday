@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For You 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/surprise.css" />
+  <link rel="stylesheet" href="css/music-player.css" />
+</head>
+
+<body class="split-layout">
+
+<div id="music-player"></div>
+
+<main class="split-container">
+
+  <section class="left-panel">
+    <img src="assets/images/surprise/1.jpg" alt="My Favourite Person">
+  </section>
+
+  <section class="right-panel">
+    <div class="text-content">
+      
+      <h1 class="type-line title-glow" data-speed="250" data-delay="1500">
+        Happyyyy Birthdayyyy,<br>myyy babyyyy 💝
+      </h1>
+
+      <p class="type-line soft-glow" data-speed=150" data-delay="3000">
+        I don’t know how to put everything into words.<br>
+        But I know this —
+      </p>
+
+      <p class="type-line highlight-glow" data-speed="150" data-delay="3000">
+        Life feels lighter with you.<br>
+        Safer with you.<br>
+        Better with you.
+      </p>
+
+      <p class="type-line soft-glow" data-speed="150" data-delay="1000">
+        Thank you for choosing me.<br>
+        Thank you for staying.<br>
+        Thank you for being you.
+      </p>
+
+      <p class="type-line end-glow" data-speed="150" data-delay="2000">
+        Always yours,<br>
+        Ishhh ♥️
+      </p>
+
+      <button class="surprise-btn" onclick="window.location.href='future.html'">
+        Let’s Do It 🚀
+      </button>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="js/music.js"></script>
+<script src="js/surprise.js"></script> 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    playTrack("track3");
+  });
+</script>
+
+</body>
+</html>
